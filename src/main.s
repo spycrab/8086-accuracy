@@ -74,7 +74,7 @@ load_test:
 strings:
         welcome db '8086-accuracy (c) spycrab0, 2018.', 20, 20, 'This program is free software licensed under the GNU GPL v3+.' ,20, 'See the LICENSE file included with this program for more details.', 20, 20, 0
         test_passed db ' -> Test passed sucessfully.', 20, 0
-        test_failed db ' -> Test failed!', 20, 20, 20, 20, 'wat', 0
+        test_failed db ' -> Test failed!', 20, 0
         read_error db 'Read error occured.', 0
         all_done db 'Done. Hanging...', 0
 
