@@ -1,25 +1,24 @@
 ;;; 8086-accuracy (c) spycrab0, 2018
 ;;; Licensed under the GNU GPL v3+. See LICENSE.
 
-zero:   
+zero:
 jmp start
-        
-%include "util.s"
 
-prints_main:
-        prints si
-        ret
+%include "util.s"
+%include "macro.s"
+%include "const.s"
+
+MAKE_LOCAL prints_main, prints, si
 
 %macro prints_local 1
-        mov si, %1 
-        call prints_main        
+        mov si, %1
+        call prints_main
 %endmacro
-        
-        
+
 start:
         mov ax, 7C0h
         mov ds, ax
-        
+
         prints_local welcome
 
         mov si, test_cmp_announce
@@ -27,19 +26,19 @@ start:
         call load_test
 
         prints_local all_done
-        
+
 freeze: jmp freeze              ; Endless loop
-        
+
 ;;; Loads a test from floppy
 ;;; Parameters:
 ;;; CL = Sector
 ;;; DS:SI = Test message
-load_test:                
+load_test:
 
         push cx
         prints_local test_cmp_announce
         pop cx
-        
+
         mov dl, 00h             ; Drive
 
         ;; CHS Address
@@ -58,21 +57,21 @@ load_test:
 
         prints_local read_error
         ret
-        
+
         .cont:
         mov cx, sp
         call 0h:500h            ; Call the sector we've just loaded
         cmp ax, 1h              ; See if the return code was 1 (sucesss)
         mov sp, cx
-        
+
         jz .okay
         prints_local test_failed
         ret
-.okay:  prints_local test_passed        
+.okay:  prints_local test_passed
         ret
-        
+
 strings:
-        welcome db '8086-accuracy (c) spycrab0, 2018.', 20, 20, 'This program is free software licensed under the GNU GPL v3+.' ,20, 'See the LICENSE file included with this program for more details.', 20, 20, 0
+        welcome db '8086-accuracy (c) spycrab0, 2018.', 20, 20,'This program is free software licensed under the GNU GPL v3+.' ,20, 'See the LICENSE file included with this program for more details.', 20, 20, 0
         test_passed db ' -> Test passed sucessfully.', 20, 0
         test_failed db ' -> Test failed!', 20, 0
         read_error db 'Read error occured.', 0
@@ -81,13 +80,12 @@ strings:
         test_cmp_announce  db 'Testing CMP...', 0
         test_lods_announce db 'Testing LODSB / LODSBW...', 0
         test_sub_announce db 'Testing SUB...', 0
-        
-signature times 510-($-$$) db 0
-dw 0xAA55
-        
+
+signature times FLOPPY_SECTOR_SIZE-MBR_SIGNATURE_SIZE-($-zero) db 0
+MBR_SIGNATURE
+
 ;;; Sector 2
-%include 'cmp.s'
-times 512-($-test_cmp) db 0
+EMBED_TEST cmp
 
 ;;; Fill the remaining space with zeros
-times 1474560-($-zero) db 0
+times FLOPPY_1_44MB_SIZE-($-zero) db 0
