@@ -6,9 +6,12 @@ test_cmp:
         cmp ah, ah
         jnz .fail
         jne .fail
+        jg  .fail
+        ja  .fail
         jnp .fail
         jl  .fail
-        jg  .fail
+        jo  .fail
+        js  .fail
 
         printc '2'
 
@@ -19,10 +22,13 @@ test_cmp:
         jz  .fail
         je  .fail
         jg  .fail
+        ja  .fail
         jnl .fail
+        jns .fail
+        jo  .fail
 
         mov ax, 1
         ret
-        
+
 .fail:  mov ax, 0
         ret
