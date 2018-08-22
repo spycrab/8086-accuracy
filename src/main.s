@@ -25,6 +25,10 @@ start:
         mov cl, 02h
         call load_test
 
+        mov si, test_add_announce
+        mov cl, 03h
+        call load_test
+
         prints_local all_done
 
 freeze: jmp freeze              ; Endless loop
@@ -36,7 +40,7 @@ freeze: jmp freeze              ; Endless loop
 load_test:
 
         push cx
-        prints_local test_cmp_announce
+        prints_local si
         pop cx
 
         mov dl, 00h             ; Drive
@@ -78,14 +82,16 @@ strings:
         all_done db 'Done. Hanging...', 0
 
         test_cmp_announce  db 'Testing CMP...', 0
-        test_lods_announce db 'Testing LODSB / LODSBW...', 0
-        test_sub_announce db 'Testing SUB...', 0
+        test_add_announce db 'Testing ADD...', 0
 
 signature times FLOPPY_SECTOR_SIZE-MBR_SIGNATURE_SIZE-($-zero) db 0
 MBR_SIGNATURE
 
 ;;; Sector 2
 EMBED_TEST cmp
+
+;;; Sector 3
+EMBED_TEST add
 
 ;;; Fill the remaining space with zeros
 times FLOPPY_1_44MB_SIZE-($-zero) db 0
