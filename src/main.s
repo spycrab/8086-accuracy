@@ -70,6 +70,7 @@ load_test:
 
         jz .okay
         prints_local test_failed
+        prints_local si
         ret
 .okay:  prints_local test_passed
         ret
@@ -77,12 +78,30 @@ load_test:
 strings:
         welcome db '8086-accuracy (c) spycrab0, 2018.', 20, 20,'This program is free software licensed under the GNU GPL v3+.' ,20, 'See the LICENSE file included with this program for more details.', 20, 20, 0
         test_passed db ' -> Test passed sucessfully.', 20, 0
-        test_failed db ' -> Test failed!', 20, 0
+        test_failed db ' -> Test failed: ', 20, 0
         read_error db 'Read error occured.', 0
         all_done db 'Done. Hanging...', 0
-
         test_cmp_announce  db 'Testing CMP...', 0
         test_add_announce db 'Testing ADD...', 0
+
+        ja_msg db 'JA', 0
+        jna_msg db 'JNA', 0
+        jc_msg db 'JC', 0
+        jnc_msg db 'JNC', 0
+        je_msg db 'JE', 0
+        jne_msg db 'JNE', 0
+        jl_msg db 'JL', 0
+        jnl_msg db 'JNL', 0
+        jg_msg db 'JG', 0
+        jng_msg db 'JNG', 0
+        jo_msg db 'JO', 0
+        jno_msg db 'JNO', 0
+        jp_msg db 'JP', 0
+        jnp_msg db 'JNP', 0
+        js_msg db 'JS', 0
+        jns_msg db 'JNS', 0
+        jz_msg db 'JZ', 0
+        jnz_msg db 'JNZ', 0
 
 signature times FLOPPY_SECTOR_SIZE-MBR_SIGNATURE_SIZE-($-zero) db 0
 MBR_SIGNATURE

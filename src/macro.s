@@ -23,4 +23,9 @@ times FLOPPY_SECTOR_SIZE-($ - %%begin) db 0
     ret
 %endmacro
 
+%macro JUMP_FAIL 1
+mov si, %{1}_msg
+%1 .fail        
+%endmacro        
+        
 %endif

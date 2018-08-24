@@ -3,14 +3,14 @@ test_cmp: printc '1'
           mov ah, 0xff
 
           cmp ah, ah
-          jnz .fail
-          jne .fail
-          jg  .fail
-          ja  .fail
-          jnp .fail
-          jl  .fail
-          jo  .fail
-          js  .fail
+          JUMP_FAIL jnz
+          JUMP_FAIL jne
+          JUMP_FAIL jg
+          JUMP_FAIL ja
+          JUMP_FAIL jnp
+          JUMP_FAIL jl
+          JUMP_FAIL jo
+          JUMP_FAIL js
 
           printc '2'
 
@@ -18,13 +18,13 @@ test_cmp: printc '1'
           mov bx, 0x2001
 
           cmp ax, bx
-          jz  .fail
-          je  .fail
-          jg  .fail
-          ja  .fail
-          jnl .fail
-          jns .fail
-          jo  .fail
+          JUMP_FAIL jz
+          JUMP_FAIL je
+          JUMP_FAIL jg
+          JUMP_FAIL ja
+          JUMP_FAIL jnl
+          JUMP_FAIL jns
+          JUMP_FAIL jo
 
           printc '3'
 
@@ -32,14 +32,14 @@ test_cmp: printc '1'
           mov bl, 0xff
 
           cmp ah, bl
-          jz  .fail
-          jnc .fail
-          je  .fail
-          jng .fail
-          ja  .fail
-          jl  .fail
-          js  .fail
-          jo  .fail
+          JUMP_FAIL jz
+          JUMP_FAIL jnc
+          JUMP_FAIL je
+          JUMP_FAIL jng
+          JUMP_FAIL ja
+          JUMP_FAIL jl
+          JUMP_FAIL js
+          JUMP_FAIL jo
 
           mov ax, 1
           ret
