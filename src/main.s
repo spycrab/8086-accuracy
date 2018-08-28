@@ -1,6 +1,8 @@
 ;;; 8086-accuracy (c) spycrab0, 2018
 ;;; Licensed under the GNU GPL v3+. See LICENSE.
 
+cpu 8086
+
 zero:
 jmp start
 
