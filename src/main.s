@@ -71,8 +71,12 @@ load_test:
         mov sp, cx
 
         jz .okay
+
+        push si
         prints_local test_failed
+        pop si
         prints_local si
+        prints_local line_break
         ret
 .okay:  prints_local test_passed
         ret
@@ -80,11 +84,13 @@ load_test:
 strings:
         welcome db '8086-accuracy (c) spycrab0, 2018.', 20, 20,'This program is free software licensed under the GNU GPL v3+.' ,20, 'See the LICENSE file included with this program for more details.', 20, 20, 0
         test_passed db ' -> Test passed sucessfully.', 20, 0
-        test_failed db ' -> Test failed: ', 20, 0
+        test_failed db ' -> Test failed: ', 0
         read_error db 'Read error occured.', 0
         all_done db 'Done. Hanging...', 0
         test_cmp_announce  db 'Testing CMP...', 0
         test_add_announce db 'Testing ADD...', 0
+
+        line_break db 20, 0
 
         ja_msg db 'JA', 0
         jna_msg db 'JNA', 0
