@@ -5,6 +5,7 @@ test_cmp: printc '1'
           cmp ah, ah
           JUMP_FAIL jnz
           JUMP_FAIL ja
+          JUMP_FAIL jc
           JUMP_FAIL jnp
           JUMP_FAIL jo
           JUMP_FAIL js
@@ -19,6 +20,7 @@ test_cmp: printc '1'
           cmp ax, bx
           JUMP_FAIL jz
           JUMP_FAIL ja
+          JUMP_FAIL jnc
           JUMP_FAIL jns
           JUMP_FAIL jo
           JUMP_FAIL jg
